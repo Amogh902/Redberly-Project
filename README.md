@@ -238,6 +238,10 @@ A simple application is included to validate:
 * SonarQube static analysis
 * Conditional Docker image build
 
+![](/images/dockerimage-container-ss.png)
+
+![](/images/dockerimage%20output-ss.png)
+
 ---
 
 ##  Conclusion

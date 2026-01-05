@@ -69,7 +69,7 @@ pipeline {
             emailext(
                 subject: "ABORTED: Jenkins Build #${BUILD_NUMBER}",
                 body: "Pipeline aborted due to SonarQube Quality Gate failure or timeout.",
-                to: "your-email@gmail.com"
+                to: "amoghdongre902@gmail.com"
             )
         }
     }
