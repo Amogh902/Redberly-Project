@@ -1,0 +1,76 @@
+pipeline {
+    agent any
+
+    environment {
+        GIT_REPO_URL      = 'https://github.com/Amogh902/Redberly-Project.git'
+        GIT_BRANCH        = 'main'
+        SONAR_PROJECT_KEY = 'redberly-project'
+        SONARQUBE_SERVER  = 'sonarqube'
+        DOCKER_IMAGE      = 'amogh02/redberly-project'
+    }
+
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                git branch: "${GIT_BRANCH}",
+                    url: "${GIT_REPO_URL}"
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def scannerHome = tool 'sonar-scanner'
+                    withSonarQubeEnv("${SONARQUBE_SERVER}") {
+                        sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                        -Dsonar.sources=.
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh "docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} ."
+            }
+        }
+    }
+
+    post {
+        success {
+            emailext(
+                subject: "SUCCESS: Jenkins Build #${BUILD_NUMBER}",
+                body: "Build successful. Docker image created: ${DOCKER_IMAGE}:${BUILD_NUMBER}",
+                to: "amoghdongre902@gmail.com"
+            )
+        }
+
+        failure {
+            emailext(
+                subject: "FAILED: Jenkins Build #${BUILD_NUMBER}",
+                body: "Pipeline failed. Please check Jenkins logs.",
+                to: "amoghdongre902@gmail.com"
+            )
+        }
+
+        aborted {
+            emailext(
+                subject: "ABORTED: Jenkins Build #${BUILD_NUMBER}",
+                body: "Pipeline aborted due to SonarQube Quality Gate failure or timeout.",
+                to: "your-email@gmail.com"
+            )
+        }
+    }
+}
