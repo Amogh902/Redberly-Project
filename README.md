@@ -204,15 +204,19 @@ The CI pipeline is defined using a declarative Jenkinsfile. All configurations s
 The following outputs were captured to demonstrate pipeline execution:
 
 * Jenkins pipeline execution (successful)
+* 
   ![](/images/jenkins-output-ss.png)
 
 * SonarQube dashboard showing Quality Gate status
+* 
   ![](/images/sonarqube-output.png)
 
 * Email notification received
+* 
   ![](/images/email-recieved.png)
 
 * Docker image created on Jenkins server
+* 
   ![](/images/dockerimage-created-ss.png)
 
 
@@ -241,7 +245,4 @@ The implementation strictly adheres to the given problem statement and focuses e
 
 ---
 
-##  Author
 
-**Amogh Dongre**
-DevOps Engineer Candidate
