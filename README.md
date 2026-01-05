@@ -204,19 +204,27 @@ The CI pipeline is defined using a declarative Jenkinsfile. All configurations s
 The following outputs were captured to demonstrate pipeline execution:
 
 * Jenkins pipeline execution (successful)
-* 
+ 
   ![](/images/jenkins-output-ss.png)
 
-* SonarQube dashboard showing Quality Gate status
-* 
+* SonarQube dashboard showing Quality Gate status both SUCCESS and FAILURE
+ 
+  * SUCCESS
   ![](/images/sonarqube-output.png)
 
-* Email notification received
-* 
+  * FAILURE
+  ![](/images/sonarqube-output%20fail.png) 
+
+* Email notification received both SUCCESS and FAILURE
+ 
+  * SUCCESS  
   ![](/images/email-recieved.png)
 
+  * FAILURE
+  ![](/images/email-recieved_fail.png)
+
 * Docker image created on Jenkins server
-* 
+ 
   ![](/images/dockerimage-created-ss.png)
 
 
